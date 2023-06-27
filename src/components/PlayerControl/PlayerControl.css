@@ -1,0 +1,25 @@
+.player_control{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.player_control svg{
+    color: #b3b3b3;
+    transition: 0.2s ease-in-out;
+    /* cursor: pointer; */
+}
+
+.player_control svg:hover{
+    color: white;
+    transition: 0.2s ease-in-out;
+}
+
+.state svg{
+    color: white;
+}
+
+.previous,.state,.next{
+    font-size: 2rem;
+}
