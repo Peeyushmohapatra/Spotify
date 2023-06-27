@@ -6,6 +6,7 @@ import axios from 'axios'
 
 const Currenttrack = () => {
     const {token,currentlyPlaying} = useSelector((state) => {
+      console.log(state.currentlyPlaying);
         return state
     });
     const dispatch = useDispatch()
@@ -30,6 +31,8 @@ const Currenttrack = () => {
                 image:item.album.images[2].url
             }
             dispatch({ type:"SET_PLAYING", currentlyPlaying:currentlyPlaying });
+          }else{
+            dispatch({ type:"SET_PLAYING", currentlyPlaying:null });
           }
         };
         getCurrentTrack();
@@ -54,3 +57,5 @@ const Currenttrack = () => {
 }
 
 export default Currenttrack
+
+
