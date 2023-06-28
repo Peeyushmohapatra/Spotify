@@ -4,7 +4,7 @@ import "./Login.css";
 const Login = () => {
   const handleClick = async () => {
     const client_id = "b73fbf5a33144978b187c7d720650b3e";
-    const redirect_uri = "https://spotify-eight-psi.vercel.app";
+    const redirect_uri = "https://spotify-eight-psi.vercel.app/";
     const api_uri = "https://accounts.spotify.com/authorize";
     const scope = [
       "user-read-private",
