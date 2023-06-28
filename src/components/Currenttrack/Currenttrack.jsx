@@ -24,16 +24,15 @@ const Currenttrack = () => {
 
           if(response.data !== ""){
             // const {item} = response.data
-            const currentlyPlaying = {
+            const currentPlaying = {
                 id:response.data.item.id,
                 name:response.data.item.name,
                 artists:response.data.item.artists.map((artist) => artist.name),
                 image:response.data.item.album.images[2].url
             };
-            dispatch({ type:"SET_PLAYING", currentlyPlaying:currentlyPlaying });
-           
+            dispatch({ type:"SET_PLAYING", currentPlaying:currentPlaying });
           }else{
-            dispatch({ type:"SET_PLAYING", currentlyPlaying:null });
+            dispatch({ type:"SET_PLAYING", currentPlaying:null });
           }
         };
         getCurrentTrack();

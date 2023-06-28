@@ -29,7 +29,7 @@ export const reducer = (state={token:"",playlists:[],userInfo:null,selectedPlayl
     else if(action.type === "SET_PLAYING") {
         return {
             ...state,
-            currentlyPlaying:action.currentlyPlaying
+            currentlyPlaying:action.currentPlaying
         }
     }
     else if(action.type === "SET_PLAYER_STATE"){
