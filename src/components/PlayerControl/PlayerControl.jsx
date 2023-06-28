@@ -14,7 +14,7 @@ const PlayerControl = () => {
     const dispatch = useDispatch()
     const changeState = async () => {
         const state = playerState ? "pause" : "play";
-        await axios.put(
+        const response = await axios.put(
           `https://api.spotify.com/v1/me/player/${state}`,
           {},
           {
@@ -24,6 +24,7 @@ const PlayerControl = () => {
             },
           }
         );
+
         dispatch({
           type: "SET_PLAYER_STATE",
           playerState: !playerState,

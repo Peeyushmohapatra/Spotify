@@ -6,7 +6,7 @@ import axios from 'axios'
 
 const Body = ({headerBackground}) => {
   const dispatch = useDispatch();
-  const {token,selectedPlaylistId,selectedPlayList} = useSelector((state) => {
+  const {token,selectedPlaylistId,selectedPlayList,playerState} = useSelector((state) => {
     return state;
   })
 
@@ -31,6 +31,7 @@ const Body = ({headerBackground}) => {
         name:response.data.name,
         description:response.data.description.startsWith("<a") ? "" : response.data.description,
         image:response.data.images[0].url,
+
         tracks:response.data.tracks.items.map(({track}) => {
           return {
             id:track.id,
@@ -53,7 +54,44 @@ const Body = ({headerBackground}) => {
     getInitialPlaylist()
     // console.log(selectedPlaylistId);
     
-  },[token,dispatch,selectedPlaylistId])
+  },[token,dispatch,selectedPlaylistId]);
+
+  const playTrack = async(id,name,artists,image,context_uri,track_number) => {
+    const response = await axios.put(
+      `https://api.spotify.com/v1/me/player/play`,
+      {
+        context_uri,
+        offset:{
+          position:track_number-1
+        },
+        position_ms:0,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    if(response.status === 204){
+      const currentlyPlaying = {
+        id,name,artists,image
+      }
+      dispatch({
+        type:"SET_PLAYING",
+        currentlyPlaying:currentlyPlaying
+      })
+      dispatch({
+        type:"SET_PLAYER_STATE",
+        playerState:true
+      })
+    }else{
+      dispatch({
+        type:"SET_PLAYER_STATE",
+        playerState:true
+      })
+    }
+  }
   return (
     <div className='bodyContainer'>
       {
@@ -86,9 +124,11 @@ const Body = ({headerBackground}) => {
             </div>
             <div className="tracks">
               {
-                selectedPlayList.tracks.map(({id,name,artists,image,duration,album,context_uri,number},idx) => {
+                selectedPlayList.tracks.map(({id,name,artists,image,duration,album,context_uri,track_number},idx) => {
                   return (
-                    <div className="row" key={id}>
+                    <div className="row" onClick={() => {
+                      playTrack(id,name,artists,image,context_uri,track_number)
+                    }} key={id}>
                       <div className="col">
                         <span>{idx + 1}</span>
                       </div>

@@ -6,7 +6,7 @@ import axios from 'axios'
 
 const Currenttrack = () => {
     const {token,currentlyPlaying} = useSelector((state) => {
-      console.log(state.currentlyPlaying);
+      // console.log(state.currentlyPlaying);
         return state
     });
     const dispatch = useDispatch()
@@ -16,21 +16,22 @@ const Currenttrack = () => {
             "https://api.spotify.com/v1/me/player/currently-playing",
             {
               headers: {
-                Authorization: "Bearer " + token,
                 "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
               },
             }
           );
 
           if(response.data !== ""){
-            const {item} = response.data
+            // const {item} = response.data
             const currentlyPlaying = {
-                id:item.id,
-                name:item.name,
-                artists:item.artists.map((artist) => artist.name),
-                image:item.album.images[2].url
-            }
+                id:response.data.item.id,
+                name:response.data.item.name,
+                artists:response.data.item.artists.map((artist) => artist.name),
+                image:response.data.item.album.images[2].url
+            };
             dispatch({ type:"SET_PLAYING", currentlyPlaying:currentlyPlaying });
+           
           }else{
             dispatch({ type:"SET_PLAYING", currentlyPlaying:null });
           }

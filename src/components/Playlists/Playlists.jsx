@@ -5,7 +5,7 @@ import axios from "axios";
 
 const Playlists = () => {
   const dispatch = useDispatch();
-  const {token,playlists} = useSelector((state) => {
+  const {token,playlists,selectedPlaylistId} = useSelector((state) => {
     return state;
   });
 
@@ -29,13 +29,23 @@ const Playlists = () => {
     };
     getPlaylistData();
   }, [token, dispatch]);
+
+
+  const changeCurrentPlaylist = (selectedPlaylistId) => {
+    dispatch({
+      type:"SET_PLAYLIST_ID",
+      selectedPlaylistId:selectedPlaylistId
+    })
+  }
   return <div className="playlistContainer">
     <ul>
       {
         playlists.map(({name,id}) => {
           return (
             <>
-            <li key={id}>{name}</li>
+            <li key={id} onClick={() => {
+              changeCurrentPlaylist(id)
+            }}>{name}</li>
             </>
           )
         })

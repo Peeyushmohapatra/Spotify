@@ -38,5 +38,11 @@ export const reducer = (state={token:"",playlists:[],userInfo:null,selectedPlayl
             playerState:action.playerState
         }
     }
+    else if(action.type === "SET_PLAYLIST_ID"){
+        return {
+            ...state,
+            selectedPlaylistId:action.selectedPlaylistId
+        }
+    }
     return state
 }
